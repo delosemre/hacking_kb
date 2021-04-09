@@ -91,24 +91,41 @@ time.sleep(1)
 
 #repo ekleme
 
+
 print("   \033[1;91mBirkaç Düzenleme Yapıyoruz...\033[1;m")
 print("   \033[1;91mRepo Ekleniyor...\033[1;m")
 time.sleep(1)
-repo = open('/etc/apt/sources.list','r+')
-repo.write('\n deb http://http.kali.org/kali kali-rolling main contrib non-free')
-os.system("wget -q -O - https://www.kali.org/archive-key.asc | gpg --import")
-os.system("gpg --fingerprint 7D8D0BF6")
-print(" ")
-print("   \033[1;91mrepo Güncelleniyor...\033[1;m")
-print(" ")
-time.sleep(1)
-os.system("apt-get update")
-repo.close()
-print("   \033[1;91mRepo Eklendi.\033[1;m")
-print("   \033[1;91mEkran Temizleniyor...\033[1;m")
-print("   \033[1;91mAçlıyor...\033[1;m")
-time.sleep(2)
-cmd1 = os.system ("clear")
+#os.system()
+
+packetmanbul = os.popen("whereis pacman | grep /pacman").read()
+
+if (packetmanbul != ""):
+     if (os.popen("cat /etc/pacman.d/blackarch-mirrorlist").read() == "cat: /etc/pacman.d/blackarch-mirrorlist: No such file or directory"):
+          os.system("curl -O https://blackarch.org/strap.sh && bash strap.sh")
+          time.sleep(1)
+          os.system("rm -rf strap.sh")
+     os.system("clear")
+     packet = "pacman -S "
+else:
+     if (os.popen("cat /etc/apt/sources.list | grep kali").read() == ""):
+          repo = open('/etc/apt/sources.list','r+')                                                 
+          repo.write('\n deb http://http.kali.org/kali kali-rolling main contrib non-free') # her başladığında sourcese yeni kayıt ekleyecek!
+          os.system("wget -q -O - https://www.kali.org/archive-key.asc | gpg --import")
+          os.system("gpg --fingerprint 7D8D0BF6")
+          print(" ")
+          print("   \033[1;91mrepo Güncelleniyor...\033[1;m")
+          print(" ")
+          time.sleep(1)
+          os.system("apt-get update")
+          repo.close()
+          print("   \033[1;91mRepo Eklendi.\033[1;m")
+          print("   \033[1;91mEkran Temizleniyor...\033[1;m")
+          print("   \033[1;91mAçlıyor...\033[1;m")
+          time.sleep(2)
+          cmd1 = os.system ("clear")
+     packet = "apt install "
+     os.system("clear")
+
 
 #Menü
 
@@ -167,7 +184,7 @@ def dmitry():
      if secimdmitry == "e" or secimdmitry == "E":
                print("   \033[1;91mDmitry Yükleniyor...\033[1;m")
                time.sleep(1)
-               os.system("apt-get install dmitry")
+               os.system(packet + "dmitry")
                print("   \033[1;91mDmitry Başlatılıyor...\033[1;m")
                time.sleep(1)
                os.system("clear")
@@ -194,7 +211,7 @@ def golismero():
      if secimgolis == "e" or secimgolis == "E":
           print("   \033[1;91mGoLismero Yükleniyor...\033[1;m")
           time.sleep(1)
-          os.system("apt-get install golismero")
+          os.system(packet + "golismero")
           os.system("clear")
           print("   \033[1;91mGoLismero Başlatılıyor...\033[1;m")
           time.sleep(1)
@@ -217,7 +234,7 @@ def theharvester():
      if secimtheharvester == "e" or secimtheharvester == "E":
           print("   \033[1;91mTheharvester Yükleniyor...\033[1;m")
           time.sleep(1)
-          os.system("apt-get install theharvester")
+          os.system(packet + "theharvester")
           os.system("clear")
           print("   \033[1;91mTheharvester Başlatılıyor...\033[1;m")
           time.sleep(1)
@@ -247,7 +264,7 @@ def sublist3r():
      if secimsublist3r == "e" or secimsublist3r == "E":
           print("   \033[1;91mSublist3r Yükleniyor...\033[1;m")
           time.sleep(1)
-          os.system("apt-get install sublist3r")
+          os.system(packet + "sublist3r")
           os.system("clear")
           print("   \033[1;91mSublist3r Başlatılıyor...\033[1;m")
           time.sleep(1)
@@ -275,7 +292,7 @@ def nmap():
      if secimnmap == "e" or secimnmap == "E":
           print("   \033[1;91mNmap Yükleniyor...\033[1;m")
           time.sleep(1)
-          os.system("apt-get install nmap")
+          os.system(packet + "nmap")
           os.system("clear")
           print("   \033[1;91mNmap Başlatılıyor...\033[1;m")
           time.sleep(1)
@@ -304,10 +321,10 @@ def fimap():
      if secimfimap == "e" or secimfimap == "E":
           print("   \033[1;91mFimap Yükleniyor...\033[1;m")
           time.sleep(1)
-          os.system("apt-get install fimap")
+          os.system(packet + "fimap")
           print("   \033[1;91mBagımlılıklar Yükleniyor...\033[1;m")
           time.sleep(1)
-          os.system("apt-get install python-pip")
+          os.system(packet + "python-pip")
           os.system("pip install httplib2")
           os.system("clear")
           print("   \033[1;91mFimap Başlatılıyor...\033[1;m")
@@ -334,7 +351,7 @@ def uniscan():
      if secimuniscan == "e" or secimuniscan == "E":
           print("   \033[1;91mUniscan Yükleniyor...\033[1;m")
           time.sleep(1)
-          os.system("apt-get install uniscan")
+          os.system(packet + "uniscan")
           print("   \033[1;91mUniscan Güncelleniyor...\033[1;m")
           time.sleep(0.5)
           os.system("clear")
@@ -360,7 +377,7 @@ def joomscan():
      if secimjoomscan == "e" or secimjoomscan == "E":
           print("   \033[1;91mJoomScan Yükleniyor...\033[1;m")
           time.sleep(1)
-          os.system("apt-get install joomscan")
+          os.system(packet + "joomscan")
           print("   \033[1;91mJoomScan Güncelleniyor...\033[1;m")
           time.sleep(0.5)
           os.system("clear")
@@ -391,7 +408,7 @@ def wpscan():
      if secimwpscan == "e" or secimwpscan == "E":
           print("   \033[1;91mwpscan Yükleniyor...\033[1;m")
           time.sleep(1)
-          os.system("apt-get install wpscan")
+          os.system(packet + "wpscan")
           print("   \033[1;91mwpscan Güncelleniyor...\033[1;m")
           time.sleep(0.5)
           os.system("clear")
@@ -416,7 +433,7 @@ def skipfish():
      if secimskipfish == "e" or secimskipfish == "E":
           print("   \033[1;91mskipfish Yükleniyor...\033[1;m")
           time.sleep(1)
-          os.system("apt-get install skipfish")
+          os.system(packet + "skipfish")
           print("   \033[1;91mskipfish Güncelleniyor...\033[1;m")
           time.sleep(0.5)
           print("   91mBagımlılıklar Yükleniyor...")
@@ -523,7 +540,11 @@ if secim == "3":
 
 if secim == "Sistemi Güncelle" or secim == "sistemi güncelle" or secim == "4":
           print("Sistem Güncelleniyor" + " " + kullanici)
-          os.system("apt-get update")
+
+          if (packet == "apt install "):
+               os.system("apt-get update")
+          else:
+               os.system(pacman -Syy)
           logo()
           menu()
 if secim == "çıkış" or secim == "Çıkış" or secim == "99":
